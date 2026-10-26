@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buku Teka-Teki PDF, 20 hingga 100 Puzzle</title>
+<meta name="description" content="Buku teka-teki PDF: Cari Kata, Sudoku, Labirin, Susun Huruf dan Kriptogram. Muat turun, cetak dan terus main. Mula RM2.60 untuk 20 puzzle.">
+<meta property="og:title" content="Buku Teka-Teki PDF, 20 hingga 100 Puzzle">
+<meta property="og:description" content="Muat turun, cetak dan terus main. Mula RM2.60 untuk 20 puzzle.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14213d;
+  --paper:#f6f8fb;
+  --grid:#d9e2f0;
+  --hi:#ffd43b;
+  --green:#1f7a3d;
+  --wa:#15803d;
+  --muted:#4a5775;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:1.0625rem;line-height:1.55;
+}
+body.lock{overflow:hidden}
+h1,h2,h3{
+  font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  font-weight:800;line-height:1.08;letter-spacing:-.01em;margin:0 0 .5em;
+}
+h1{font-size:clamp(2.2rem,9vw,3.6rem)}
+h2{font-size:clamp(1.6rem,6vw,2.3rem)}
+p{margin:0 0 1em;max-width:60ch}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.wrap.wide{max-width:980px}
+
+.btn{
+  display:inline-block;background:var(--hi);color:var(--ink);cursor:pointer;
+  font-family:"Baloo 2","Trebuchet MS",sans-serif;font-weight:800;font-size:1.15rem;line-height:1.2;
+  padding:.8rem 1.5rem;border:2px solid var(--ink);border-radius:6px;
+  box-shadow:4px 4px 0 var(--ink);text-decoration:none;
+  transition:transform .08s,box-shadow .08s;
+}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn:focus-visible,summary:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+
+/* Hero */
+.top{padding:14px 0}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.25rem;text-decoration:none}
+.top a.wa{font-weight:700}
+.hero{
+  position:relative;padding:12px 0 100px;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:80px;
+  background:linear-gradient(rgba(246,248,251,0),var(--paper));pointer-events:none;
+}
+.hero-grid{display:grid;gap:34px;align-items:center;padding-top:18px}
+@media(min-width:760px){.hero-grid{grid-template-columns:1.1fr .9fr}}
+.price-line{font-weight:700;margin-bottom:1.3em}
+
+.puz{max-width:340px;width:100%;margin:0 auto}
+.puz-grid{
+  position:relative;display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;
+  background-color:#fff;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:12.5% 12.5%;
+  border:2px solid var(--ink);border-radius:4px;box-shadow:6px 6px 0 var(--ink);
+}
+.cell{
+  position:relative;z-index:1;display:grid;place-items:center;
+  font-weight:700;font-size:clamp(1rem,4.6vw,1.45rem);
+}
+.swipe{position:absolute;z-index:0;background:var(--hi);border-radius:999px}
+.swipe.row{
+  left:.5%;top:37.5%;width:86.5%;height:12.5%;transform-origin:left center;
+  animation:drawX .7s .6s cubic-bezier(.2,.7,.2,1) both;
+}
+.swipe.col{
+  left:88%;top:12.5%;width:11.5%;height:50%;transform-origin:center top;
+  animation:drawY .6s 1.3s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes drawX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes drawY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.puz-cap{font-size:.95rem;color:var(--muted);margin:16px 0 0;text-align:center}
+
+/* Sections */
+.sec{padding:52px 0}
+.items{display:grid;gap:20px;margin:0;padding:0;list-style:none}
+.items li{padding-left:16px;border-left:6px solid var(--hi)}
+.items strong{display:block;font-family:"Baloo 2",sans-serif;font-size:1.25rem;line-height:1.2}
+
+/* Packages */
+.packs{display:grid;grid-template-columns:1fr 1fr;gap:14px;border:0;padding:0;margin:0 0 22px}
+.pack{position:relative;display:block;cursor:pointer}
+.pack input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.pack-body{
+  display:grid;gap:2px;justify-items:start;align-content:start;min-height:158px;
+  background:#fff;border:2px solid var(--ink);border-radius:4px;padding:14px 14px 12px;
+  transition:box-shadow .12s,transform .12s,background .12s;
+}
+.pack input:checked + .pack-body{background:var(--hi);box-shadow:5px 5px 0 var(--ink);transform:translate(-2px,-2px)}
+.pack input:focus-visible + .pack-body{outline:3px solid #2563eb;outline-offset:3px}
+.pack-n{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:2.6rem;line-height:1}
+.pack-unit{font-size:.95rem;color:var(--muted)}
+.pack-price{font-weight:700;font-size:1.3rem;margin-top:6px}
+.pack-per{font-size:.9rem;color:var(--muted)}
+.pack-tag{margin-top:6px;font-size:.85rem;font-weight:700;background:var(--green);color:#fff;padding:2px 8px;border-radius:3px}
+
+.sum{display:grid;gap:10px;background:#fff;border:2px solid var(--ink);border-radius:4px;padding:18px}
+.sum-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.sum-total{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:2rem;line-height:1}
+.save{color:var(--green);font-weight:700;min-height:1.5em;margin:0}
+.sum .btn{width:100%;text-align:center}
+.note{font-size:.95rem;color:var(--muted);margin:0}
+
+/* Steps */
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:16px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+.steps li::before{
+  content:counter(s);display:grid;place-items:center;width:44px;height:44px;
+  border:2px solid var(--ink);border-radius:50%;background:var(--hi);
+  font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem;
+}
+.steps strong{display:block;font-family:"Baloo 2",sans-serif;font-size:1.2rem;line-height:1.2}
+
+/* FAQ */
+details{border-top:2px solid var(--ink);padding:14px 0}
+details:last-of-type{border-bottom:2px solid var(--ink)}
+summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:800;font-size:1.3rem;line-height:1}
+details[open] summary::after{content:"\2212"}
+details p{margin:.7em 0 0}
+
+/* Last call */
+.last{background:var(--ink);color:#fff;text-align:center;padding:56px 0}
+.last p{margin-left:auto;margin-right:auto}
+.last .btn{box-shadow:4px 4px 0 rgba(255,255,255,.9)}
+
+footer{padding:26px 0 110px;font-size:.95rem;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* Sticky bar */
+.bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:10;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  background:var(--ink);color:#fff;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  transform:translateY(100%);visibility:hidden;
+  transition:transform .2s,visibility 0s .2s;
+}
+.bar.show{transform:none;visibility:visible;transition:transform .2s}
+.bar strong{font-family:"Baloo 2",sans-serif;font-size:1.3rem}
+.bar .btn{padding:.55rem 1.1rem;font-size:1rem;box-shadow:3px 3px 0 rgba(255,255,255,.9)}
+
+/* Order popup */
+dialog{
+  border:0;padding:0;margin:0 auto;width:100%;max-width:520px;
+  height:100vh;height:100dvh;max-height:none;overflow-y:auto;
+  background:#fff;color:var(--ink);
+}
+dialog::backdrop{background:rgba(20,33,61,.65)}
+@media(min-width:600px){
+  dialog{height:auto;max-height:92vh;margin:auto;border:2px solid var(--ink);border-radius:8px}
+}
+.od-head{
+  position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--ink);color:#fff;padding:16px 16px 16px 20px;
+}
+.od-head h2{margin:0;font-size:1.6rem;color:#fff}
+.od-tools{display:flex;align-items:center;gap:10px}
+.od-badge{
+  display:grid;place-items:center;min-width:40px;height:40px;padding:0 8px;border-radius:999px;
+  background:var(--hi);color:var(--ink);font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.1rem;
+}
+.od-x{
+  width:44px;height:44px;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.18);color:#fff;font-size:1.6rem;line-height:1;
+}
+.od-body{padding:8px 20px 28px}
+.od-body label.f{display:block;font-weight:700;margin:16px 0 6px}
+.od-body input[type="text"],.od-body input[type="tel"]{
+  width:100%;padding:14px 16px;font:inherit;color:inherit;background:#fff;
+  border:2px solid #c9d2e3;border-radius:10px;
+}
+.od-body input[type="text"]:focus,.od-body input[type="tel"]:focus{border-color:var(--ink)}
+.od-sum{margin:22px 0 0;padding-top:16px;border-top:2px dashed #b9c3d6;display:grid;gap:6px}
+.od-sum .row{display:flex;justify-content:space-between;gap:12px;color:var(--muted)}
+.od-sum .row.total{color:var(--ink);font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2}
+.od-pay{margin-top:22px;border:2px solid var(--ink);border-radius:8px;padding:16px;background:var(--paper)}
+.od-pay h3{font-size:1.3rem;margin:0 0 .3em}
+.od-pay p{margin:0 0 12px;font-size:.98rem}
+.od-qr{display:block;width:100%;max-width:300px;height:auto;margin:0 auto 12px;border-radius:8px;background:#fff}
+.od-save{display:block;text-align:center;font-weight:700;margin:0 0 4px;padding:10px;border:2px solid var(--ink);border-radius:6px;background:#fff;text-decoration:none}
+.od-check{display:flex;gap:12px;align-items:flex-start;margin-top:14px;font-weight:700;cursor:pointer}
+.od-check input{width:24px;height:24px;margin:1px 0 0;flex:none;accent-color:var(--wa)}
+.od-send{
+  display:block;width:100%;margin-top:18px;padding:16px;cursor:pointer;
+  background:var(--wa);color:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);
+  font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.2rem;line-height:1.2;
+}
+.od-send:disabled{background:#7b879f;box-shadow:none;cursor:not-allowed}
+.od-hint{font-size:.92rem;color:var(--muted);margin:10px 0 0}
+.od-err{color:#b42318;font-weight:700;min-height:1.4em;margin:12px 0 0}
+.od-foot{font-size:.92rem;color:var(--muted);margin:6px 0 0}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .swipe.row,.swipe.col{animation:none}
+  .bar,.bar.show{transition:none}
+  .pack-body,.btn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap wide">
+    <a class="brand" href="#" id="brand">Teka-Teki Seronok</a>
+    <a class="wa" id="waTop" href="#" target="_blank" rel="noopener">Tanya di WhatsApp</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="hero">
+    <div class="wrap wide">
+      <div class="hero-grid">
+        <div>
+          <h1>Buku teka-teki PDF. Muat turun, cetak, terus main.</h1>
+          <p>Cari Kata, Sudoku, Labirin, Susun Huruf dan Kriptogram dalam satu buku. Ada tahap mudah hingga susah, dan jawapan di bahagian belakang.</p>
+          <p class="price-line">Mula <span id="fromPrice">RM2.60 untuk 20 puzzle</span>.</p>
+          <a class="btn" href="#pakej">Pilih pakej</a>
+        </div>
+        <div class="puz">
+          <div class="puz-grid" id="puz" aria-hidden="true"></div>
+          <p class="puz-cap">Cari perkataan SERONOK dan OTAK. Dah ditanda untuk anda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="isi">
+    <div class="wrap">
+      <h2>Lima jenis puzzle dalam satu buku</h2>
+      <ul class="items">
+        <li><strong>Cari Kata</strong>Cari perkataan yang tersembunyi dalam grid. Tema haiwan, buah, negeri dan banyak lagi.</li>
+        <li><strong>Sudoku</strong>Dari tahap mudah sehingga pakar. Setiap puzzle ada satu jawapan sahaja.</li>
+        <li><strong>Labirin</strong>Cari jalan dari mula sampai tamat. Seronok untuk kanak-kanak.</li>
+        <li><strong>Susun Huruf</strong>Susun semula huruf yang bercampur menjadi perkataan.</li>
+        <li><strong>Kriptogram</strong>Pecahkan mesej rahsia yang disulitkan dengan kod huruf.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="pakej">
+    <div class="wrap">
+      <h2>Pilih berapa banyak puzzle</h2>
+      <p>Jenis puzzle sama untuk semua pakej. Makin banyak puzzle, makin murah setiap satu.</p>
+      <fieldset class="packs" id="packs" aria-label="Pilih pakej"></fieldset>
+      <div class="sum" aria-live="polite">
+        <div class="sum-row"><span id="selText">20 puzzle</span><span class="sum-total" id="total">RM2.60</span></div>
+        <p class="save" id="save"></p>
+        <button class="btn" type="button" id="buy">Beli sekarang</button>
+        <p class="note">Bayar melalui kod QR, kemudian hantar order ke WhatsApp. Pautan muat turun dihantar selepas bayaran disahkan.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="cara">
+    <div class="wrap">
+      <h2>Cara dapat buku anda</h2>
+      <ol class="steps">
+        <li><div><strong>Pilih pakej</strong>Tentukan 20, 40, 80 atau 100 puzzle.</div></li>
+        <li><div><strong>Bayar melalui QR</strong>Tekan Beli sekarang, isi nama dan nombor telefon, kemudian bayar guna kod QR.</div></li>
+        <li><div><strong>Hantar order ke WhatsApp</strong>Hantar order beserta resit. Kami semak bayaran dan hantar pautan muat turun PDF.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="soalan">
+    <div class="wrap">
+      <h2>Soalan lazim</h2>
+      <details>
+        <summary>Apa format buku ini?</summary>
+        <p>PDF. Boleh dibuka di telefon, tablet atau komputer, dan boleh dicetak sendiri.</p>
+      </details>
+      <details>
+        <summary>Ada jawapan?</summary>
+        <p>Ada. Semua jawapan disusun di bahagian belakang buku.</p>
+      </details>
+      <details>
+        <summary>Apa beza pakej 20, 40, 80 dan 100?</summary>
+        <p>Hanya jumlah puzzle. Jenis puzzle dan tahap kesukaran sama.</p>
+      </details>
+      <details>
+        <summary>Sesuai untuk siapa?</summary>
+        <p>Kanak-kanak boleh mula dengan Cari Kata dan Labirin tahap mudah. Dewasa dan warga emas boleh cuba Sudoku dan Kriptogram. Setiap jenis ada tahap mudah hingga pakar.</p>
+      </details>
+      <details>
+        <summary>Bagaimana saya terima buku selepas bayar?</summary>
+        <p>Selepas anda hantar order dan resit di WhatsApp, kami semak bayaran dan hantar pautan muat turun. Kalau ada masalah, hubungi kami di <a id="waFaq" href="#" target="_blank" rel="noopener">WhatsApp</a>.</p>
+      </details>
+      <details>
+        <summary>Boleh cetak dan kongsi?</summary>
+        <p>Boleh dicetak untuk kegunaan sendiri dan keluarga. Buku ini tidak boleh dijual semula atau dikongsi secara umum.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="last">
+    <div class="wrap">
+      <h2>Mula dengan 20 puzzle sahaja</h2>
+      <p id="lastLine">Cuba dulu dengan RM2.60.</p>
+      <a class="btn" href="#pakej">Pilih pakej</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; <span id="yr"></span> <span id="brand2">Teka-Teki Seronok</span></span>
+    <a id="waFoot" href="#" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</footer>
+
+<div class="bar" id="bar" role="region" aria-label="Pakej dipilih">
+  <div><strong id="barPrice">RM2.60</strong> <span id="barN">untuk 20 puzzle</span></div>
+  <button class="btn" type="button" id="barBtn">Beli sekarang</button>
+</div>
+
+<dialog id="order" aria-labelledby="orderTitle">
+  <div class="od-head">
+    <h2 id="orderTitle">Order Anda</h2>
+    <div class="od-tools">
+      <span class="od-badge" id="odBadge" title="Jumlah puzzle">20</span>
+      <button class="od-x" type="button" id="odClose" aria-label="Tutup">&times;</button>
+    </div>
+  </div>
+
+  <form class="od-body" id="orderForm" novalidate>
+    <label class="f" for="fName">Nama</label>
+    <input type="text" id="fName" placeholder="Nama anda" autocomplete="name" required>
+
+    <label class="f" for="fPhone">No. telefon</label>
+    <input type="tel" id="fPhone" inputmode="tel" placeholder="Contoh: 01123456789" autocomplete="tel" required>
+
+    <label class="f" for="fNote">Nota tambahan (jika ada)</label>
+    <input type="text" id="fNote" placeholder="Contoh: Hantar pautan ke e-mel saya">
+
+    <div class="od-sum">
+      <div class="row"><span>Pakej</span><span id="odPack">20 puzzle</span></div>
+      <div class="row total"><span>Jumlah</span><span id="odTotal">RM2.60</span></div>
+    </div>
+
+    <div class="od-pay">
+      <h3>Bayar dulu</h3>
+      <p>Imbas kod QR dengan app bank anda. Kalau anda buka page ini di telefon yang sama, simpan gambar QR dan muat naik dalam app bank.</p>
+      <img class="od-qr" id="odQr" alt="Kod QR Maybank untuk bayaran" width="300" height="378">
+      <a class="od-save" id="odSave" download="qr-bayaran.png">Simpan gambar QR</a>
+      <p style="margin:10px 0 0">Jumlah perlu dibayar: <strong id="odPay">RM2.60</strong></p>
+      <label class="od-check">
+        <input type="checkbox" id="fPaid">
+        <span>Saya sudah buat bayaran</span>
+      </label>
+    </div>
+
+    <p class="od-err" id="odErr" role="alert"></p>
+    <button class="od-send" type="submit" id="odSend" disabled>Hantar Order ke WhatsApp</button>
+    <p class="od-hint" id="odHint">Tanda kotak "Saya sudah buat bayaran" untuk teruskan.</p>
+    <p class="od-foot">Order belum dikira sah sehingga disahkan melalui WhatsApp.</p>
+  </form>
+</dialog>
+
+<script>
+/* ============ TUKAR DI SINI ============ */
+const CONFIG = {
+  brand: "Teka-Teki Seronok",
+  whatsapp: "601118505770",           // 01118505770 dalam format antarabangsa, tanpa + dan tanpa jarak
+  qrImage: "qr.png",                  // gambar QR bayaran, letak dalam folder yang sama dengan index.html
+  packages: [
+    { n: 20,  price: 2.60 },
+    { n: 40,  price: 4.90 },
+    { n: 80,  price: 9.50 },
+    { n: 100, price: 11.50 },
+  ],
+};
+/* ======================================= */
+
+const $ = (id) => document.getElementById(id);
+const rm = (v) => "RM" + v.toFixed(2);
+const pk = CONFIG.packages;
+const base = pk[0].price / pk[0].n;
+const cheapest = pk.reduce((a, b) => (a.price / a.n <= b.price / b.n ? a : b));
+
+/* Brand, links, year */
+document.title = "Buku Teka-Teki PDF, " + pk[0].n + " hingga " + pk[pk.length - 1].n + " Puzzle";
+$("brand").textContent = CONFIG.brand;
+$("brand2").textContent = CONFIG.brand;
+const wa = "https://wa.me/" + CONFIG.whatsapp;
+["waTop", "waFaq", "waFoot"].forEach((id) => { $(id).href = wa; });
+$("yr").textContent = new Date().getFullYear();
+$("fromPrice").textContent = rm(pk[0].price) + " untuk " + pk[0].n + " puzzle";
+$("lastLine").textContent = "Cuba dulu dengan " + rm(pk[0].price) + ".";
+$("odQr").src = CONFIG.qrImage;
+$("odSave").href = CONFIG.qrImage;
+
+/* Mini word search */
+const LETTERS = ["KAMBILPR","LUPANJDO","DISMARNT","SERONOKA","PTHULIBK","MRAJINGW","CYDKLEPU","NOBATSHI"];
+$("puz").innerHTML =
+  '<span class="swipe row"></span><span class="swipe col"></span>' +
+  LETTERS.join("").split("").map((c) => '<span class="cell">' + c + "</span>").join("");
+
+/* Package picker */
+$("packs").innerHTML = pk.map((p, i) => {
+  const per = (p.price / p.n * 100).toFixed(1);
+  const tag = p === cheapest && pk.length > 1 ? '<span class="pack-tag">Paling jimat</span>' : "";
+  return '<label class="pack"><input type="radio" name="pack" value="' + i + '"' + (i === 0 ? " checked" : "") + '>' +
+    '<span class="pack-body"><span class="pack-n">' + p.n + '</span><span class="pack-unit">puzzle</span>' +
+    '<span class="pack-price">' + rm(p.price) + '</span><span class="pack-per">' + per + ' sen / puzzle</span>' + tag + '</span></label>';
+}).join("");
+
+const current = () => pk[Number(document.querySelector('input[name="pack"]:checked').value)];
+
+function update() {
+  const p = current();
+  const save = Math.round((1 - p.price / (p.n * base)) * 100);
+  $("selText").textContent = p.n + " puzzle";
+  $("total").textContent = rm(p.price);
+  $("save").textContent = save > 0 ? "Jimat " + save + "% berbanding pakej " + pk[0].n + " puzzle" : "";
+  $("barPrice").textContent = rm(p.price);
+  $("barN").textContent = "untuk " + p.n + " puzzle";
+}
+document.querySelectorAll('input[name="pack"]').forEach((r) => r.addEventListener("change", update));
+update();
+
+/* Order popup */
+const dlg = $("order");
+const form = $("orderForm");
+
+function openOrder() {
+  const p = current();
+  $("odBadge").textContent = p.n;
+  $("odPack").textContent = p.n + " puzzle";
+  $("odTotal").textContent = rm(p.price);
+  $("odPay").textContent = rm(p.price);
+  $("fPaid").checked = false;
+  $("odSend").disabled = true;
+  $("odHint").hidden = false;
+  $("odErr").textContent = "";
+  document.body.classList.add("lock");
+  if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+}
+function closeOrder() {
+  if (typeof dlg.close === "function") dlg.close(); else dlg.removeAttribute("open");
+  document.body.classList.remove("lock");
+}
+dlg.addEventListener("close", () => document.body.classList.remove("lock"));
+$("odClose").addEventListener("click", closeOrder);
+$("buy").addEventListener("click", openOrder);
+$("barBtn").addEventListener("click", openOrder);
+
+$("fPaid").addEventListener("change", (e) => {
+  $("odSend").disabled = !e.target.checked;
+  $("odHint").hidden = e.target.checked;
+});
+["fName", "fPhone"].forEach((id) => $(id).addEventListener("input", () => { $("odErr").textContent = ""; }));
+
+function fail(msg, id) {
+  $("odErr").textContent = msg;
+  $(id).focus();
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = $("fName").value.trim();
+  const phone = $("fPhone").value.trim();
+  const digits = phone.replace(/\D/g, "");
+  const note = $("fNote").value.trim();
+  if (name.length < 2) return fail("Sila isi nama anda.", "fName");
+  if (digits.length < 9 || digits.length > 13) return fail("Sila isi nombor telefon yang betul.", "fPhone");
+  if (!$("fPaid").checked) return fail("Sila buat bayaran dahulu dan tanda kotak di atas.", "fPaid");
+
+  const p = current();
+  const lines = [
+    "Hai, saya nak order buku teka-teki PDF.",
+    "",
+    "Pakej: " + p.n + " puzzle",
+    "Jumlah: " + rm(p.price),
+    "Nama: " + name,
+    "No. telefon: " + phone,
+  ];
+  if (note) lines.push("Nota: " + note);
+  lines.push("", "Saya sudah buat bayaran melalui kod QR. Resit bayaran saya lampirkan di sini.");
+  window.location.href = wa + "?text=" + encodeURIComponent(lines.join("\n"));
+});
+
+/* Sticky bar: show after the hero, hide while the picker is on screen */
+let heroVisible = true, packVisible = false;
+const toggleBar = () => $("bar").classList.toggle("show", !heroVisible && !packVisible);
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; toggleBar(); }).observe($("hero"));
+  new IntersectionObserver(([e]) => { packVisible = e.isIntersecting; toggleBar(); }).observe($("pakej"));
+}
+</script>
+</body>
+</html>
