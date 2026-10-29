@@ -132,6 +132,11 @@ a{color:inherit}
 .type input:focus-visible + .type-body{outline:3px solid #2563eb;outline-offset:3px}
 .type-name{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:1.1rem;line-height:1.15}
 .type-hint{font-size:.88rem;color:var(--muted);line-height:1.3}
+.levels{grid-template-columns:1fr}
+.levels .type-body{min-height:0}
+.levels .type-body::before{border-radius:50%}
+.levels .type-body::after{display:none}
+.levels .type input:checked + .type-body::before{box-shadow:inset 0 0 0 4px #fff}
 .type-err{color:#b42318;font-weight:700;min-height:1.4em;margin:8px 0 0}
 
 .packs{display:grid;grid-template-columns:1fr 1fr;gap:14px;border:0;padding:0;margin:0}
@@ -314,7 +319,13 @@ dialog::backdrop{background:rgba(20,33,61,.65)}
       </div>
 
       <div class="block">
-        <h3>2. Pilih jumlah puzzle</h3>
+        <h3>2. Pilih tahap kesukaran</h3>
+        <p>Pilih ikut umur anak.</p>
+        <fieldset class="types levels" id="levels" aria-label="Pilih tahap kesukaran"></fieldset>
+      </div>
+
+      <div class="block">
+        <h3>3. Pilih jumlah puzzle</h3>
         <p>Makin banyak puzzle, makin murah setiap satu.</p>
         <fieldset class="packs" id="packs" aria-label="Pilih pakej"></fieldset>
       </div>
@@ -385,7 +396,7 @@ dialog::backdrop{background:rgba(20,33,61,.65)}
   <section class="last">
     <div class="wrap">
       <h2>Mula dengan 20 puzzle sahaja</h2>
-      <p id="lastLine">Cuba dulu dengan RM5.90</p>
+      <p id="lastLine">Cuba dulu dengan RM5.90.</p>
       <div class="cta-row">
         <a class="btn" href="#pakej">Bina buku anda</a>
         <a class="btn alt" data-sample href="#" target="_blank" rel="noopener">Download contoh buku</a>
@@ -436,7 +447,7 @@ dialog::backdrop{background:rgba(20,33,61,.65)}
       <p>Imbas kod QR dengan app bank anda. Kalau anda buka page ini di telefon yang sama, simpan gambar QR dan muat naik dalam app bank.</p>
       <img class="od-qr" id="odQr" alt="Kod QR Maybank untuk bayaran" width="300" height="378">
       <a class="od-save" id="odSave" download="qr-bayaran.png">Simpan gambar QR</a>
-      <p style="margin:10px 0 0">Jumlah perlu dibayar: <strong id="odPay">RM2.60</strong></p>
+      <p style="margin:10px 0 0">Jumlah perlu dibayar: <strong id="odPay">RM5.90</strong></p>
       <label class="od-check">
         <input type="checkbox" id="fPaid">
         <span>Saya sudah buat bayaran</span>
@@ -467,9 +478,15 @@ const CONFIG = {
     { id: "numbersearch", name: "Cari Nombor",      hint: "Semua umur",             desc: "Cari nombor yang tersembunyi dalam grid penuh digit." },
     { id: "crossword",    name: "Teka Silang Kata", hint: "Remaja dan dewasa",      desc: "Isi grid mengikut petunjuk. Ada tema haiwan, buah, makanan dan negeri Malaysia." },
   ],
+  levels: [
+    { id: "easy",   name: "Mudah",     hint: "Anak umur 4-6 tahun" },
+    { id: "medium", name: "Sederhana", hint: "Anak umur 7-10 tahun" },
+    { id: "hard",   name: "Susah",     hint: "Anak 11 tahun ke atas" },
+    { id: "mixed",  name: "Campuran",  hint: "Gabungan semua tahap" },
+  ],
   packages: [
     { n: 20,  price: 5.90 },
-    { n: 40,  price: 4.90 },
+    { n: 40,  price: 8.90 },
     { n: 80,  price: 14.90 },
     { n: 100, price: 17.90 },
   ],
@@ -512,6 +529,13 @@ $("types").innerHTML = CONFIG.puzzles.map((p) =>
   '<label class="type"><input type="checkbox" name="ptype" value="' + p.id + '" checked>' +
   '<span class="type-body"><span class="type-name">' + p.name + '</span><span class="type-hint">' + p.hint + "</span></span></label>"
 ).join("");
+
+/* Difficulty picker */
+$("levels").innerHTML = CONFIG.levels.map((l, i) =>
+  '<label class="type"><input type="radio" name="level" value="' + l.id + '"' + (i === 0 ? " checked" : "") + '>' +
+  '<span class="type-body"><span class="type-name">' + l.name + '</span><span class="type-hint">' + l.hint + "</span></span></label>"
+).join("");
+const level = () => CONFIG.levels.find((l) => l.id === document.querySelector('input[name="level"]:checked').value);
 
 const chosen = () => {
   const ids = new Set(Array.from(document.querySelectorAll('input[name="ptype"]:checked')).map((i) => i.value));
@@ -583,7 +607,7 @@ function openOrder() {
   $("odPack").textContent = p.n + " puzzle";
   $("odTotal").textContent = rm(p.price);
   $("odPay").textContent = rm(p.price);
-  $("odTypes").textContent = "Jenis puzzle: " + split(p.n, list).map((x) => x.name + " " + x.n).join(", ") + ".";
+  $("odTypes").textContent = "Jenis puzzle: " + split(p.n, list).map((x) => x.name + " " + x.n).join(", ") + ". Tahap: " + level().name + " (" + level().hint.toLowerCase() + ").";
   $("fPaid").checked = false;
   $("odSend").disabled = true;
   $("odHint").hidden = false;
@@ -631,6 +655,7 @@ form.addEventListener("submit", (e) => {
     "Jenis puzzle:",
   ];
   split(p.n, list).forEach((x) => lines.push("- " + x.name + ": " + x.n));
+  lines.push("Tahap kesukaran: " + level().name + " (" + level().hint + ")");
   lines.push("Jumlah: " + rm(p.price), "Nama: " + name, "No. telefon: " + phone);
   if (note) lines.push("Nota: " + note);
   lines.push("", "Saya sudah buat bayaran melalui kod QR. Resit bayaran saya lampirkan di sini.");
